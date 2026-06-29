@@ -23,8 +23,8 @@ def train_model():
     HR_VAL_DIR = "../dataset/DIV2K_valid_HR"
     LR_VAL_DIR = "../dataset/DIV2K_valid_LR_bicubic/X2"
     
-    CHECKPOINT_LAST = "checkpoints/2res_96f_last.pth"
-    CHECKPOINT_BEST = "checkpoints/2res_96f_best.pth"
+    CHECKPOINT_LAST = "checkpoints/residual_last.pth"
+    CHECKPOINT_BEST = "checkpoints/residual_best.pth"
     
     os.makedirs("checkpoints", exist_ok=True)
     
@@ -39,7 +39,7 @@ def train_model():
     val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=6, pin_memory=True)
 
     # Inizializzazione Modello, Loss (L1 su HF) e Ottimizzatore
-    model = HFMResidualNet(num_features=96, num_blocks=2, scale_factor=UPSCALE_FACTOR).to(device)
+    model = HFMResidualNet(num_features=64, num_blocks=4, scale_factor=UPSCALE_FACTOR).to(device)
     criterion = nn.L1Loss() 
     optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
     

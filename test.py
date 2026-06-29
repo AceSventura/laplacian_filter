@@ -30,7 +30,7 @@ def run_inference(image_path, model_path, output_path, gt_path=None, scale_facto
     print(f"[Sistema] Esecuzione su dispositivo: {device}")
     
     # Inizializzazione della rete con i parametri architetturali standard
-    model = HFMResidualNet(num_features=96, num_blocks=2, scale_factor=scale_factor).to(device)
+    model = HFMResidualNet(num_features=64, num_blocks=4, scale_factor=scale_factor).to(device)
     
     # Caricamento dei pesi addestrati
     if os.path.exists(model_path):
@@ -163,14 +163,18 @@ def run_inference(image_path, model_path, output_path, gt_path=None, scale_facto
 
 if __name__ == "__main__":
     # Parametri di esecuzione del test
-    INPUT_IMAGE = "../dataset/DIV2K_valid_LR_bicubic/X2/0801x2.png"         
-    GT_IMAGE = "../dataset/DIV2K_valid_HR/0801.png"          # Aggiunto parametro per la Ground Truth
-    MODEL_CHECKPOINT = "checkpoints/2res_96f_best.pth"
+    imgs = ["0801", "0802", "0803", "0804", "0805", "0806", "0807", "0808", "0809", "0810"]
+    #INPUT_IMAGE = f"../dataset/DIV2K_valid_LR_bicubic/X2/{img}x2.png"         
+    #GT_IMAGE = f"../dataset/DIV2K_valid_HR/{img}.png"          # Aggiunto parametro per la Ground Truth
+    MODEL_CHECKPOINT = "checkpoints/residual_best.pth"
     OUTPUT_IMAGE = "results/test_image_hr.png"
     SCALE = 2
     
-    if not os.path.exists(INPUT_IMAGE):
-        raise FileNotFoundError(f"[Errore Critico] L'immagine di input '{INPUT_IMAGE}' non è stata trovata.")
+    #if not os.path.exists(INPUT_IMAGE):
+    #    raise FileNotFoundError(f"[Errore Critico] L'immagine di input '{INPUT_IMAGE}' non è stata trovata.")
 
     # Esecuzione del test passando il path della GT
-    run_inference(INPUT_IMAGE, MODEL_CHECKPOINT, OUTPUT_IMAGE, gt_path=GT_IMAGE, scale_factor=SCALE)
+    for img in imgs:
+        INPUT_IMAGE = f"../dataset/DIV2K_valid_LR_bicubic/X2/{img}x2.png"         
+        GT_IMAGE = f"../dataset/DIV2K_valid_HR/{img}.png" 
+        run_inference(INPUT_IMAGE, MODEL_CHECKPOINT, OUTPUT_IMAGE, gt_path=GT_IMAGE, scale_factor=SCALE)

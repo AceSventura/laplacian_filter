@@ -36,7 +36,7 @@ def evaluate_and_plot(lr_paths_dict, gt_paths_dict, model_path, output_dir="resu
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"[Sistema] Inizializzazione valutazione batch su dispositivo: {device}")
     
-    model = HFMResidualNet(num_features=96, num_blocks=2, scale_factor=scale_factor).to(device)
+    model = HFMResidualNet(num_features=64, num_blocks=4, scale_factor=scale_factor).to(device)
     
     if os.path.exists(model_path):
         checkpoint = torch.load(model_path, map_location=device)
@@ -198,7 +198,7 @@ if __name__ == "__main__":
     evaluate_and_plot(
         lr_paths_dict=lr_dict,
         gt_paths_dict=gt_dict,
-        model_path="checkpoints/2res_96f_best.pth",
+        model_path="checkpoints/residual_best.pth",
         output_dir="results",
         scale_factor=2,
         max_images=16
