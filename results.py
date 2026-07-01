@@ -169,7 +169,7 @@ def evaluate_and_plot(lr_paths_dict, gt_paths_dict, model_path, output_dir="resu
         plt.tight_layout()
         
         # Salvataggio
-        save_path = os.path.join(output_dir, f"comparazione_{img_id}.png")
+        save_path = os.path.join(output_dir, f"{img_id}.png")
         plt.savefig(save_path, dpi=150, bbox_inches='tight')
         plt.close(fig) # Chiude la figura per evitare memory leak
         
@@ -185,21 +185,21 @@ if __name__ == "__main__":
     
     lr_dict = {}
     lr_dict.update(
-        {f"{i}": f"{lr_dir}/080{i}x2.png" for i in range(1, 10)}
+        {f"080{i}": f"{lr_dir}/080{i}x2.png" for i in range(1, 10)}
     )
-    lr_dict.update({f"{i}": f"{lr_dir}/08{i}x2.png" for i in range(10, 15)})
+    lr_dict.update({f"08{i}": f"{lr_dir}/08{i}x2.png" for i in range(10, 20)})
 
     gt_dict = {}
     gt_dict.update(
-        {f"{i}": f"{gt_dir}/080{i}.png" for i in range(1, 10)}
+        {f"080{i}": f"{gt_dir}/080{i}.png" for i in range(1, 10)}
     )
-    gt_dict.update({f"{i}": f"{gt_dir}/08{i}.png" for i in range(10, 15)})
+    gt_dict.update({f"08{i}": f"{gt_dir}/08{i}.png" for i in range(10, 20)})
     
     evaluate_and_plot(
         lr_paths_dict=lr_dict,
         gt_paths_dict=gt_dict,
         model_path="checkpoints/residual_best.pth",
-        output_dir="results",
+        output_dir="results_mac",
         scale_factor=2,
-        max_images=16
+        max_images=19
     )
